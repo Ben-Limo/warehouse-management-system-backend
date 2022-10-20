@@ -1,0 +1,30 @@
+version: '2'
+services:
+  API:
+    image: 'warehouse-api-docker:latest'
+    build:
+      context: .
+    container_name: warehouse-api-docker
+    depends_on:
+      - DB
+    env_file:
+      - .env
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://DB:5432/warehouse_db
+      - SPRING_DATASOURCE_USERNAME=$SPRING_DATASOURCE_USERNAME
+      - SPRING_DATASOURCE_PASSWORD=$SPRING_DATASOURCE_PASSWORD
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  DB:
+    image: "postgres"
+    container_name: warehouse-db-docker
+    volumes:
+      - /home/limz/docker/volumes/postgres/docker-pg-vol/data:/var/lib/postgresql/data
+      - /home/limz/docker/volumes/postgres/init/initData.sql:/docker-entrypoint-initdb.d/initData.sql
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=$SPRING_DATASOURCE_USERNAME
+      - POSTGRES_DB=warehouse_db
+      - POSTGRES_PASSWORD=$SPRING_DATASOURCE_PASSWORD
+
