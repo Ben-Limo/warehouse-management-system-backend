@@ -12,14 +12,27 @@
 	<artifactId>warehouse-management-system-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>warehouse-management-system-backend</name>
-	<description>A management system that allows warehouses to adminster operations.</description>
+	<description>A management system that allows warehouses to administer operations.</description>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>11</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.github.ulisesbocchio</groupId>
+			<artifactId>jasypt-spring-boot-starter</artifactId>
+			<version>3.0.3</version>
 		</dependency>
 
 		<dependency>
@@ -41,7 +54,12 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>com.github.ulisesbocchio</groupId>
+				<artifactId>jasypt-maven-plugin</artifactId>
+			</plugin>
 		</plugins>
+		<finalName>warehouse-api-docker</finalName>
 	</build>
 
 </project>
