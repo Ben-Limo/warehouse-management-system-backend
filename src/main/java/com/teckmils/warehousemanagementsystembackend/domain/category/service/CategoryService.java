@@ -4,6 +4,8 @@ import com.teckmils.warehousemanagementsystembackend.domain.category.dto.AddCate
 import com.teckmils.warehousemanagementsystembackend.domain.category.dto.CategoryItemDTO;
 import com.teckmils.warehousemanagementsystembackend.domain.category.model.Category;
 import com.teckmils.warehousemanagementsystembackend.domain.category.repository.CategoryRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -11,12 +13,9 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
-
-    public CategoryService(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
 
     public List<CategoryItemDTO> getCategories() {
         final List<Category> categories = this.categoryRepository.findAll();
@@ -31,9 +30,10 @@ public class CategoryService {
         return categoryItemDTOS;
     }
 
-    public CategoryItemDTO getCategoryById(UUID id) {
+    @Cacheable("categories")
+    public CategoryItemDTO getCategoryById(Long id) {
         final Category category = this.categoryRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new CategoryNotFoundException());
 
         return new CategoryItemDTO(
                 category.getId(),
@@ -51,7 +51,7 @@ public class CategoryService {
         });
     }
 
-    public void deleteCategoryById(final UUID id) {
+    public void deleteCategoryById(final Long id) {
         this.categoryRepository.deleteById(id);
     }
 }

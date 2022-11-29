@@ -1,5 +1,9 @@
 package com.teckmils.warehousemanagementsystembackend.domain.category.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -9,11 +13,13 @@ import java.util.UUID;
 
 @Table(name = "categories", schema = "public")
 @Entity
+@Data
+@NoArgsConstructor
 public class Category {
     @Id
     @GeneratedValue
     @Column(name = "id", nullable = false)
-    private UUID id;
+    private Long id;
 
     @Column(name = "item_name", nullable = false)
     private String name;
@@ -29,40 +35,16 @@ public class Category {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
-    public Category() {
-    }
-
     public Category(final String name, final String description) {
         this.name = name;
         this.description = description;
     }
 
-    public UUID getId() {
-        return this.id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(final String name) {
+    public Category(Long id, String name, String description) {
+        this.id = id;
         this.name = name;
-    }
-
-    public Timestamp getCreatedAt() {
-        return this.createdAt;
-    }
-
-    public Timestamp getUpdatedAt() {
-        return this.updatedAt;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(final String description) {
         this.description = description;
     }
+
 }
 

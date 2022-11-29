@@ -4,6 +4,7 @@ import com.teckmils.warehousemanagementsystembackend.domain.category.dto.AddList
 import com.teckmils.warehousemanagementsystembackend.domain.category.dto.CategoryItemDTO;
 import com.teckmils.warehousemanagementsystembackend.domain.category.model.Category;
 import com.teckmils.warehousemanagementsystembackend.domain.category.service.CategoryService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -14,12 +15,9 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService categoryService;
-
-    public CategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
-    }
 
     @RequestMapping(path = "/categories", method = RequestMethod.GET)
     public List<CategoryItemDTO> getCategories() {
@@ -27,7 +25,7 @@ public class CategoryController {
     }
 
     @GetMapping("/categories/{id}")
-    public CategoryItemDTO getCategoryById(@PathVariable UUID id) {
+    public CategoryItemDTO getCategoryById(@PathVariable Long id) {
         return this.categoryService.getCategoryById(id);
     }
 
@@ -37,7 +35,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/categories/{id}")
-    public void deleteCategory(@PathVariable @NotNull final UUID id) {
+    public void deleteCategory(@PathVariable @NotNull final Long id) {
         this.categoryService.deleteCategoryById(id);
     }
 }
