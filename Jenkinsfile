@@ -1,8 +1,9 @@
 pipeline {
-    agent any
-
-    tools {
-        maven "maven-3.8.6"
+    agent {
+        docker {
+            image "3.8.6-openjdk-18"
+            label "docker-agent-maven"
+        }
     }
 
     stages {
