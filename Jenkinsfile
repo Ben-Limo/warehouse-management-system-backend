@@ -1,8 +1,8 @@
 pipeline {
-    agent {
-        docker {
-            image "3.8.6-openjdk-18"
-        }
+    agent any
+
+    tools {
+        maven "maven-3.8.6"
     }
 
     stages {
@@ -10,7 +10,6 @@ pipeline {
                 steps {
                     echo "checking environment .."
                     sh "mvn -version"
-                    sh "java -version"
              }
         }
 
